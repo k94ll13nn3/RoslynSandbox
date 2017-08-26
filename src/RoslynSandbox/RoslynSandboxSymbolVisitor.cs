@@ -8,6 +8,11 @@ namespace RoslynSandbox
     {
         public override void DefaultVisit(ISymbol symbol)
         {
+            if (symbol.DeclaredAccessibility != Accessibility.Public && symbol.DeclaredAccessibility != Accessibility.NotApplicable)
+            {
+                return;
+            }
+
             if (symbol is INamespaceOrTypeSymbol namespaceOrTypeSymbol)
             {
                 foreach (var child in namespaceOrTypeSymbol.GetMembers())
@@ -15,26 +20,24 @@ namespace RoslynSandbox
                     child.Accept(this);
                 }
             }
-            else if (!(symbol is IMethodSymbol method && method.MethodKind != MethodKind.Ordinary))
-            {
-                var kind = symbol.Kind.ToString();
-                var implementedSymbol = IsInterfaceImplementation(symbol);
-                var symbolType = string.Empty;
-                if (implementedSymbol.isInterfaceImplementation)
-                {
-                    symbolType = $"implements {implementedSymbol.symbol}";
-                }
-                else if (symbol.IsOverride && symbol is IMethodSymbol m)
-                {
-                    symbolType = $"overrides {m.OverriddenMethod}";
-                }
-                else if (symbol.IsOverride && symbol is IPropertySymbol p)
-                {
-                    symbolType = $"overrides {p.OverriddenProperty}";
-                }
 
-                Console.WriteLine($"{symbol} ({kind}): {symbolType}");
+            var kind = symbol.Kind.ToString();
+            var implementedSymbol = IsInterfaceImplementation(symbol);
+            var symbolType = string.Empty;
+            if (implementedSymbol.isInterfaceImplementation)
+            {
+                symbolType = $"implements {implementedSymbol.symbol}";
             }
+            else if (symbol.IsOverride && symbol is IMethodSymbol m)
+            {
+                symbolType = $"overrides {m.OverriddenMethod}";
+            }
+            else if (symbol.IsOverride && symbol is IPropertySymbol p)
+            {
+                symbolType = $"overrides {p.OverriddenProperty}";
+            }
+
+            Console.WriteLine($"{symbol} ({kind}): {symbolType}");
         }
 
         public override void VisitAssembly(IAssemblySymbol symbol)
@@ -42,10 +45,10 @@ namespace RoslynSandbox
             symbol.GlobalNamespace.Accept(this);
         }
 
-        private (ISymbol symbol, bool isInterfaceImplementation) IsInterfaceImplementation<T>(T method) where T : ISymbol
+        private (ISymbol symbol, bool isInterfaceImplementation) IsInterfaceImplementation<T>(T method) where T : class, ISymbol
         {
-            var symbol = method
-                .ContainingType
+            var symbol = method?
+                .ContainingType?
                 .AllInterfaces
                 .SelectMany(@interface => @interface
                     .GetMembers()

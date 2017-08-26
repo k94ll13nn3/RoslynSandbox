@@ -17,16 +17,15 @@ namespace RoslynSandbox
     {
         private static void Main(string[] args)
         {
-            string assembly = typeof(IToken).Assembly.Location;
-            MetadataReference metadata = MetadataReference.CreateFromFile(assembly);
+            MetadataReference testAssembly = MetadataReference.CreateFromFile(typeof(IToken).Assembly.Location);
             MetadataReference mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 
             string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             Compilation compilation = CSharpCompilation
                 .Create(nameof(RoslynSandbox))
-                .WithReferences(mscorlib, metadata);
+                .WithReferences(mscorlib, testAssembly);
 
-            IAssemblySymbol assemblySymbol = compilation.GetAssemblyOrModuleSymbol(metadata) as IAssemblySymbol;
+            IAssemblySymbol assemblySymbol = compilation.GetAssemblyOrModuleSymbol(testAssembly) as IAssemblySymbol;
 
             new RoslynSandboxSymbolVisitor().Visit(assemblySymbol.GlobalNamespace);
         }
