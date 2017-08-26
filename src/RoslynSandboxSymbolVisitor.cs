@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 
 namespace RoslynSandbox
@@ -11,7 +10,10 @@ namespace RoslynSandbox
         {
             if (symbol is INamespaceOrTypeSymbol namespaceOrTypeSymbol)
             {
-                Parallel.ForEach(namespaceOrTypeSymbol.GetMembers(), child => child.Accept(this));
+                foreach (var child in namespaceOrTypeSymbol.GetMembers())
+                {
+                    child.Accept(this);
+                }
             }
             else if (!(symbol is IMethodSymbol method && method.MethodKind != MethodKind.Ordinary))
             {
