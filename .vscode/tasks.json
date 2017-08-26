@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/RoslynSandbox.csproj"
+                "${workspaceRoot}/src/RoslynSandbox/RoslynSandbox.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"
