@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -17,7 +18,10 @@ namespace RoslynSandbox
         private static void Main(string[] args)
         {
             MetadataReference mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
-            IEnumerable<string> inputs = Directory.EnumerateFiles(@"src/data");
+
+            string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            IEnumerable<string> inputs = Directory.EnumerateFiles(Path.Combine(currentDirectory, "data"));
+
             Compilation compilation = CSharpCompilation
                 .Create(nameof(RoslynSandbox))
                 .WithReferences(mscorlib)
