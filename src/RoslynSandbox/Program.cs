@@ -1,11 +1,8 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
-using Strinken.Parser;
+using RoslynTestLibrary;
 
 // see https://github.com/dotnet/roslyn/issues/6138
 // see https://joshvarty.wordpress.com/2015/10/25/learn-roslyn-now-part-15-the-symbolvisitor/
@@ -17,15 +14,15 @@ namespace RoslynSandbox
     {
         private static void Main(string[] args)
         {
-            MetadataReference testAssembly = MetadataReference.CreateFromFile(typeof(IToken).Assembly.Location);
+            MetadataReference testAssembly = MetadataReference.CreateFromFile(typeof(Data).Assembly.Location);
             MetadataReference mscorlib = MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
 
-            string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             Compilation compilation = CSharpCompilation
                 .Create(nameof(RoslynSandbox))
                 .WithReferences(mscorlib, testAssembly);
 
-            IAssemblySymbol assemblySymbol = compilation.GetAssemblyOrModuleSymbol(testAssembly) as IAssemblySymbol;
+            var assemblySymbol = compilation.GetAssemblyOrModuleSymbol(testAssembly) as IAssemblySymbol;
 
             new RoslynSandboxSymbolVisitor().Visit(assemblySymbol.GlobalNamespace);
         }
