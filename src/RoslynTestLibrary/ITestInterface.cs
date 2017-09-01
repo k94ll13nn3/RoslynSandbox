@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RoslynTestLibrary
 {
@@ -14,7 +15,7 @@ namespace RoslynTestLibrary
 
         IEnumerable<Data> GetData(Data[] datas);
 
-        (int i, string s) ToTuple(int i, string s);
+        (int i, string s) ToTuple(int i, string s, List<DateTime> dates);
 
         (int i, string s) FromTuple((int, string) param);
     }

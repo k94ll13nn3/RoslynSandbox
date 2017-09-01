@@ -69,8 +69,7 @@ namespace RoslynSandbox
             }
 
             var info = new StringBuilder();
-            info.Append($"{returnType.Name} ");
-            info.Append($"{symbol.Name}");
+            info.Append($"{DisplayReturnType(returnType)} {symbol.Name}");
 
             if (typeParameters.Length > 0)
             {
@@ -78,7 +77,7 @@ namespace RoslynSandbox
             }
 
             info.Append("(");
-            info.Append(string.Join(", ", parameters.Select(p => $"{p.Type.Name} { p.Name}")));
+            info.Append(string.Join(", ", parameters.Select(p => DisplayParameter(p))));
             info.Append(")");
 
             if (typeParameters.Any(x => HasConstraints(x)))
@@ -131,6 +130,43 @@ namespace RoslynSandbox
                     .FindImplementationForInterfaceMember(interfaceMethod)?.Equals(method) ?? false);
 
             return (symbol, symbol != null);
+        }
+
+        private string DisplayReturnType(ITypeSymbol typeSymbol)
+        {
+            var info = new StringBuilder();
+            info.Append($"{typeSymbol.Name}");
+
+            if (typeSymbol is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.TypeArguments.Length > 0)
+            {
+                info.Append($"<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(x => x.Name))}>");
+            }
+            else if (typeSymbol.IsTupleType && typeSymbol is INamedTypeSymbol tupleTypeSymbol)
+            {
+                return $"({string.Join(", ", tupleTypeSymbol.TupleElements.Select(x => $"{x.Type.Name} {x.Name}"))})";
+            }
+
+            return info.ToString();
+        }
+
+        private string DisplayParameter(IParameterSymbol parameter)
+        {
+            if (parameter.Type is IArrayTypeSymbol arrayTypeSymbol)
+            {
+                return $"{arrayTypeSymbol.ElementType.Name}[] {parameter.Name}";
+            }
+            else if (parameter.Type is INamedTypeSymbol namedTypeSymbol && namedTypeSymbol.TypeArguments.Length > 0)
+            {
+                return $"{parameter.Type.Name}<{string.Join(", ", namedTypeSymbol.TypeArguments.Select(x => x.Name))}> {parameter.Name}";
+            }
+            else if (parameter.Type.IsTupleType && parameter.Type is INamedTypeSymbol tupleTypeSymbol)
+            {
+                return $"({string.Join(", ", tupleTypeSymbol.TupleElements.Select(x => $"{x.Type.Name} {x.Name}"))})";
+            }
+            else
+            {
+                return $"{parameter.Type.Name} {parameter.Name}";
+            }
         }
     }
 }
