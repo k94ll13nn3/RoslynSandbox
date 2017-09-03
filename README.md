@@ -10,3 +10,4 @@ Repo containing experiments with Roslyn.
   - [Example](https://github.com/Wyamio/Wyam/blob/develop/src/extensions/Wyam.CodeAnalysis/Analysis/AnalyzeSymbolVisitor.cs)
 - [Mscorlib on .NET Core](https://github.com/dotnet/roslyn/issues/16211)
 - [Test if symbol is implementation of interface](https://stackoverflow.com/a/42075734/3836163)
+- [Private members](https://github.com/dotnet/roslyn/issues/5049)

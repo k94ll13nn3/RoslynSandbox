@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using RoslynTestLibrary;
 
-namespace RoslynSandbox
+namespace RoslynSymbols
 {
     internal class Program
     {
@@ -15,12 +15,12 @@ namespace RoslynSandbox
 
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             Compilation compilation = CSharpCompilation
-                .Create(nameof(RoslynSandbox))
+                .Create(nameof(RoslynSymbols))
                 .WithReferences(mscorlib, testAssembly);
 
             var assemblySymbol = compilation.GetAssemblyOrModuleSymbol(testAssembly) as IAssemblySymbol;
 
-            new RoslynSandboxSymbolVisitor().Visit(assemblySymbol.GlobalNamespace);
+            new RoslynSymbolVisitor().Visit(assemblySymbol.GlobalNamespace);
         }
     }
 }
