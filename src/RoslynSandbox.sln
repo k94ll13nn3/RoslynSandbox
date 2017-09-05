@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoslynSymbols", "RoslynSymb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoslynTestLibrary", "RoslynTestLibrary\RoslynTestLibrary.csproj", "{835FEC19-3958-44F7-8864-F28FC2BE3042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoslynCodeGeneration", "RoslynCodeGeneration\RoslynCodeGeneration.csproj", "{0199CD6C-D505-4AC8-B828-32524FC69F6C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,18 +40,6 @@ Global
 		{835FEC19-3958-44F7-8864-F28FC2BE3042}.Release|x64.Build.0 = Release|Any CPU
 		{835FEC19-3958-44F7-8864-F28FC2BE3042}.Release|x86.ActiveCfg = Release|Any CPU
 		{835FEC19-3958-44F7-8864-F28FC2BE3042}.Release|x86.Build.0 = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|x64.Build.0 = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Debug|x86.Build.0 = Debug|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|x64.ActiveCfg = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|x64.Build.0 = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|x86.ActiveCfg = Release|Any CPU
-		{0199CD6C-D505-4AC8-B828-32524FC69F6C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

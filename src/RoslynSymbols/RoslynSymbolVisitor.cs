@@ -63,7 +63,7 @@ namespace RoslynSymbols
 
             ITypeSymbol returnType = symbol.ReturnType;
 
-            // To go in the VisitParameter method, .Accept must be called on each parameter.
+            // To go into the VisitParameter method, .Accept must be called on each parameter.
             // Same for other type of symbol.
             ImmutableArray<IParameterSymbol> parameters = symbol.Parameters;
             ImmutableArray<ITypeParameterSymbol> typeParameters = symbol.TypeParameters;
