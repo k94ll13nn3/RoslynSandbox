@@ -36,7 +36,7 @@ namespace RoslynSymbols
                 symbolType = $"overrides {p.OverriddenProperty}";
             }
 
-            Console.WriteLine($"{symbol} ({kind}): {symbolType}{Environment.NewLine}");
+            //Console.WriteLine($"{symbol} ({kind}): {symbolType}{Environment.NewLine}");
         }
 
         public override void VisitAssembly(IAssemblySymbol symbol)
@@ -167,6 +167,11 @@ namespace RoslynSymbols
                 }
             }
 
+            foreach (AttributeData attribute in symbol.GetAttributes())
+            {
+                Console.WriteLine($"[{attribute.AttributeClass.Name}]");
+            }
+
             Console.WriteLine($"{info}");
 
             var symbolDisplayFormat = new SymbolDisplayFormat(
@@ -200,6 +205,7 @@ namespace RoslynSymbols
                   | SymbolDisplayKindOptions.IncludeNamespaceKeyword,
               miscellaneousOptions:
                   SymbolDisplayMiscellaneousOptions.UseSpecialTypes);
+
             Console.WriteLine($"{symbol.ToDisplayString(symbolDisplayFormat)}{Environment.NewLine}");
         }
 
@@ -258,7 +264,9 @@ namespace RoslynSymbols
                 modifier = "ref ";
             }
 
-            return $"{modifier}{DisplayTypeSymbol(parameter.Type)} {parameter.Name}";
+            var attributes = string.Concat(parameter.GetAttributes().Select(a => $"[{a.AttributeClass.Name}]"));
+
+            return $"{attributes}{modifier}{DisplayTypeSymbol(parameter.Type)} {parameter.Name}{(parameter.IsOptional ? $" = {parameter.ExplicitDefaultValue}" : "")}";
         }
 
         private string GetTypeName(ITypeSymbol typeSymbol)

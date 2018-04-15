@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using FileType = System.IO.FileInfo;
 
 namespace RoslynTestLibrary
@@ -35,5 +36,13 @@ namespace RoslynTestLibrary
         string WithParams(params string[] s);
 
         FileType GetFile();
+
+        [Obsolete]
+        [My]
+        void Test([CallerMemberName]string param = "test");
+
+        void GetDefault(MyEnum myEnum = MyEnum.D);
+
+        int? Nullable();
     }
 }
